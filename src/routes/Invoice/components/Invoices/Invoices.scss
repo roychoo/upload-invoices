@@ -1,0 +1,16 @@
+
+.list-row {
+  display: flex;
+  flex-direction: row;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.list-header {
+  @extend .list-row;
+  font-weight: bold
+}
+
+.list-item {
+  flex: 1;
+}
