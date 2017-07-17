@@ -6,7 +6,7 @@ import InvoiceRow from './InvoiceRow'
 import './Invoices.scss'
 
 export const Invoices = ({ invoices }) => (
-  <FlipMove duration={750} easing='ease-out'>
+  <FlipMove duration={750} easing='ease-out' className='invoices'>
     <div className='list-header'>
       <div className='list-item'>Invoice No.</div>
       <div className='list-item'>Date</div>

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import { getInvoices, getInvoicesSelector } from '../modules/invoice'
-import Invoices from '../components/Invoices'
+import InvoiceUpload from '../components/InvoiceUpload'
 
 class InvoiceContainer extends Component {
   static propTypes = {
@@ -15,7 +15,7 @@ class InvoiceContainer extends Component {
   }
 
   render () {
-    return (<Invoices invoices={this.props.invoices} />)
+    return (<InvoiceUpload invoices={this.props.invoices} onDrop={() => {}} />)
   }
 }
 
