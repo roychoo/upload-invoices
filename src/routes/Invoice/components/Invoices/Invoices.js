@@ -6,7 +6,13 @@ import InvoiceRow from './InvoiceRow'
 import './Invoices.scss'
 
 export const Invoices = ({ invoices }) => (
-  <FlipMove duration={750} easing='ease-out' className='invoices'>
+  <FlipMove
+    duration={750}
+    easing='ease-out'
+    className='invoices'
+    enterAnimation='accordionVertical'
+    leaveAnimation='accordionVertical'
+  >
     <div className='list-header'>
       <div className='list-item'>Invoice No.</div>
       <div className='list-item'>Date</div>
@@ -15,7 +21,9 @@ export const Invoices = ({ invoices }) => (
     </div>
     {
       invoices.map((invoice) => (
-        <InvoiceRow key={invoice.id} invoice={invoice} />
+        <div key={invoice.id}>
+          <InvoiceRow invoice={invoice} />
+        </div>
       ))
     }
   </FlipMove>

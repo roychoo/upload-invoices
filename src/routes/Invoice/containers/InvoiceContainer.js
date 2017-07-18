@@ -2,20 +2,22 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { getInvoices, getInvoicesSelector } from '../modules/invoice'
+import { dropInvoice, getInvoices, getInvoicesSelector } from '../modules/invoice'
 import InvoiceUpload from '../components/InvoiceUpload'
 
 class InvoiceContainer extends Component {
   static propTypes = {
     getInvoices: PropTypes.func.isRequired,
-    invoices: PropTypes.array.isRequired
+    invoices: PropTypes.array.isRequired,
+    dropInvoice: PropTypes.func.isRequired
   }
   componentDidMount () {
     this.props.getInvoices()
   }
 
   render () {
-    return (<InvoiceUpload invoices={this.props.invoices} onDrop={() => {}} />)
+    const { invoices, dropInvoice } = this.props
+    return (<InvoiceUpload invoices={invoices} onDrop={dropInvoice} />)
   }
 }
 
@@ -25,7 +27,8 @@ class InvoiceContainer extends Component {
 
 const mapDispatchToProps = {
   // increment : () => increment(1),
-  getInvoices
+  getInvoices,
+  dropInvoice
 }
 
 const mapStateToProps = (state) => ({

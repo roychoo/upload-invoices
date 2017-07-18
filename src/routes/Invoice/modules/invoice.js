@@ -3,11 +3,32 @@
 // ------------------------------------
 export const GET_INVOICES_STARTED = 'GET_INVOICES_STARTED'
 export const GET_INVOICES_DONE = 'GET_INVOICES_DONE'
+export const DROP_INVOICE_STARTED = 'DROP_INVOICE_STARTED'
+export const DROP_INVOICE_DONE = 'DROP_INVOICE_DONE'
 // export const COUNTER_DOUBLE_ASYNC = 'COUNTER_DOUBLE_ASYNC'
 
 // ------------------------------------
 // Actions
 // ------------------------------------
+export function dropInvoiceStarted () {
+  return {
+    type    : DROP_INVOICE_STARTED
+  }
+}
+
+export function dropInvoiceDone () {
+  return {
+    type    : DROP_INVOICE_DONE,
+    payload: {
+      id: 'IV-' + Math.floor(Math.random() * 89999 + 10000).toString(), // generating random id.
+      date: new Date().toISOString(), // TODO: better formating
+      amount: Math.floor(Math.random() * 89999 + 10000),
+      currency: 'SGD',
+      status: 0
+    }
+  }
+}
+
 export function getInvoicesStarted () {
   return {
     type    : GET_INVOICES_STARTED
@@ -24,6 +45,17 @@ export function getInvoicesDone (invoices) {
 /*  This is a thunk, meaning it is a function that immediately
     returns a function for lazy evaluation. It is incredibly useful for
     creating async actions, especially when combined with redux-thunk! */
+export const dropInvoice = () => {
+  console.log('drop invoice')
+  return (dispatch) => {
+    dispatch(dropInvoiceStarted())
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        dispatch(dropInvoiceDone())
+      }, 3000)
+    })
+  }
+}
 
 export const getInvoices = () => {
   return (dispatch, getState) => {
@@ -34,21 +66,22 @@ export const getInvoices = () => {
           [
             {
               id: 'IV-' + Math.floor(Math.random() * 89999 + 10000).toString(), // generating random id.
-              date: new Date().toISOString().slice(0, 10), // TODO: better formating
+              date: '2017-01-03',
               amount: Math.floor(Math.random() * 89999 + 10000),
               currency: 'SGD',
               status: 0
             },
             {
               id: 'IV-' + Math.floor(Math.random() * 89999 + 10000).toString(), // generating random id.
-              date: new Date().toISOString().slice(0, 10), // TODO: better formating
+              date: '2017-01-02',
               amount: Math.floor(Math.random() * 89999 + 10000),
               currency: 'SGD',
               status: 1
             },
             {
               id: 'IV-' + Math.floor(Math.random() * 89999 + 10000).toString(), // generating random id.
-              date: new Date().toISOString().slice(0, 10), // TODO: better formating
+              date: '2017-01-01',
+              // date: new Date('2017-1-1').toISOString().slice(0, 10), // TODO: better formating
               amount: Math.floor(Math.random() * 89999 + 10000),
               currency: 'SGD',
               status: 2
@@ -79,6 +112,12 @@ const ACTION_HANDLERS = {
       ...state,
       invoices
     }
+  },
+  [DROP_INVOICE_DONE]: (state, { payload }) => {
+    return {
+      ...state,
+      invoices: { ...state.invoices, [payload.id]: payload }
+    }
   }
 }
 
@@ -92,7 +131,9 @@ const initialState = {
 // selectors
 //
 export function getInvoicesSelector (state) {
-  return Object.keys(state.invoice.invoices).map((key) => state.invoice.invoices[key])
+  return Object.keys(state.invoice.invoices)
+    .map((key) => state.invoice.invoices[key])
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
 }
 
 export default function invoiceReducer (state = initialState, action) {
