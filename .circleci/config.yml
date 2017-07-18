@@ -41,7 +41,6 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               ssh-keyscan -H ec2-52-221-212-204.ap-southeast-1.compute.amazonaws.com >> ~/.ssh/known_hosts
             ssh ubuntu@ec2-52-221-212-204.ap-southeast-1.compute.amazonaws.com << EOF 
-              source ~/.bashrc
               cd upload-invoices
               git pull origin master
               yarn
