@@ -1,18 +1,40 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Dropzone from 'react-dropzone'
 import './Upload.scss'
+import UploadStatusIcon from '../UploadStatusIcon'
 
-export const Upload = ({ onDrop }) => (
-  <div className='upload-container'>
-    <Dropzone
-      onDrop={onDrop}
-      className='dropzone'
-    >
-      <i className='fa fa-upload fa-2x' aria-hidden='true' />
-    </Dropzone>
-  </div>
-)
+export class Upload extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      onHover: false
+    }
+  }
+
+  onDragEnter = () => {
+    this.setState({ onHover: true })
+  }
+
+  onDragLeave = () => {
+    this.setState({ onHover: false })
+  }
+
+  render () {
+    return (
+      <div className='upload-container'>
+        <Dropzone
+          onDrop={this.props.onDrop}
+          onDragEnter={this.onDragEnter}
+          onDragLeave={this.onDragLeave}
+          className='dropzone'
+        >
+          <UploadStatusIcon status={this.state.onHover} />
+        </Dropzone>
+      </div>
+    )
+  }
+}
 
 Upload.propTypes = {
   onDrop: PropTypes.func.isRequired
