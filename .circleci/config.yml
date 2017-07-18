@@ -44,6 +44,6 @@ jobs:
                 cd upload-invoices
                 git pull origin master
                 yarn
-                yarn build"
+                yarn build
               EOF
             fi
