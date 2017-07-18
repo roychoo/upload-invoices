@@ -52,7 +52,7 @@ export const dropInvoice = () => {
     return new Promise((resolve) => {
       setTimeout(() => {
         dispatch(dropInvoiceDone())
-      }, 3000)
+      }, 500)
     })
   }
 }
@@ -89,7 +89,7 @@ export const getInvoices = () => {
           ]
         ))
         resolve()
-      }, 1000)
+      }, 500)
     })
   }
 }

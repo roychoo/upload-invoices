@@ -20,11 +20,16 @@ export class Upload extends Component {
     this.setState({ onHover: false })
   }
 
+  onDrop = () => {
+    this.setState({ onHover: false })
+    this.props.onDrop()
+  }
+
   render () {
     return (
       <div className='upload-container'>
         <Dropzone
-          onDrop={this.props.onDrop}
+          onDrop={this.onDrop}
           onDragEnter={this.onDragEnter}
           onDragLeave={this.onDragLeave}
           className='dropzone'

@@ -22,7 +22,11 @@ export class UploadStatusIcon extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    this.jumpAnim.paused(!nextProps.status)
+    if (nextProps.status) {
+      this.jumpAnim.play()
+    } else {
+      this.jumpAnim.restart(0).pause(0)
+    }
   }
 
   render () {
