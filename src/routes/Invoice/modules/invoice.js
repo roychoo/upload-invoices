@@ -113,9 +113,16 @@ const ACTION_HANDLERS = {
       invoices
     }
   },
+  [DROP_INVOICE_STARTED]: (state) => ({
+    ...state,
+    uploadStarted: true,
+    uploadDone: false
+  }),
   [DROP_INVOICE_DONE]: (state, { payload }) => {
     return {
       ...state,
+      uploadDone: true,
+      uploadStarted: false,
       invoices: { ...state.invoices, [payload.id]: payload }
     }
   }
@@ -126,6 +133,8 @@ const ACTION_HANDLERS = {
 // ------------------------------------
 const initialState = {
   isLoading: false,
+  uploadStarted: false,
+  uploadDone: false,
   invoices: {}
 }
 // selectors

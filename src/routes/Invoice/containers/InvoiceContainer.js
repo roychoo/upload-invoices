@@ -9,15 +9,29 @@ class InvoiceContainer extends Component {
   static propTypes = {
     getInvoices: PropTypes.func.isRequired,
     invoices: PropTypes.array.isRequired,
-    dropInvoice: PropTypes.func.isRequired
+    dropInvoice: PropTypes.func.isRequired,
+    uploadStarted: PropTypes.bool.isRequired,
+    uploadDone: PropTypes.bool.isRequired
   }
   componentDidMount () {
     this.props.getInvoices()
   }
 
   render () {
-    const { invoices, dropInvoice } = this.props
-    return (<InvoiceUpload invoices={invoices} onDrop={dropInvoice} />)
+    const {
+      invoices,
+      dropInvoice,
+      uploadStarted,
+      uploadDone
+    } = this.props
+    return (
+      <InvoiceUpload
+        invoices={invoices}
+        onDrop={dropInvoice}
+        uploadStarted={uploadStarted}
+        uploadDone={uploadDone}
+      />
+    )
   }
 }
 
@@ -33,7 +47,9 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state) => ({
   invoices : getInvoicesSelector(state),
-  isLoading: state.invoice.isLoading
+  isLoading: state.invoice.isLoading,
+  uploadStarted: state.invoice.uploadStarted,
+  uploadDone: state.invoice.uploadDone
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:

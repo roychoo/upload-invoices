@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Dropzone from 'react-dropzone'
 import './Upload.scss'
 import UploadStatusIcon from '../UploadStatusIcon'
+import Progress from '../Progress'
 
 export class Upload extends Component {
   constructor (props) {
@@ -34,7 +35,15 @@ export class Upload extends Component {
           onDragLeave={this.onDragLeave}
           className='dropzone'
         >
-          <UploadStatusIcon status={this.state.onHover} />
+          <Progress
+            uploadStarted={this.props.uploadStarted}
+            uploadDone={this.props.uploadDone}
+          />
+          {
+            !this.props.uploadStarted ? (
+              <UploadStatusIcon status={this.state.onHover} />
+            ) : ''
+          }
         </Dropzone>
       </div>
     )
@@ -42,7 +51,9 @@ export class Upload extends Component {
 }
 
 Upload.propTypes = {
-  onDrop: PropTypes.func.isRequired
+  onDrop: PropTypes.func.isRequired,
+  uploadStarted: PropTypes.bool.isRequired,
+  uploadDone: PropTypes.bool.isRequired
 }
 
 export default Upload

@@ -1,0 +1,100 @@
+/* vars */
+/* end vars */
+.preloader {
+  position: absolute;
+  width: 4rem;
+  height: 4rem;
+  border: 0.4rem solid #2085e6;
+  border-radius: 100%;
+  opacity: 0;
+  &.show {
+    opacity: 1;
+  }
+}
+.before,
+.after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -0.2rem 0 0 -0.2rem;
+  border-bottom: 0.4rem solid #2085e6;
+  border-radius: 0.6rem;
+  -webkit-transform-origin: 0.2rem center;
+}
+.before {
+/* hour hand */
+  width: 30%;
+}
+.before-animate {
+  -webkit-animation: hour 1s ease-in infinite;
+}
+.before-checkmark {
+  -webkit-animation: check 1s ease-out;
+  -webkit-animation-fill-mode: forwards;
+}
+.after-checkmark {
+  -webkit-animation: mark 1s ease-out;
+  -webkit-animation-fill-mode: forwards;
+}
+.preloader-checkmark {
+  -webkit-animation: checkmark 1s ease-out;
+  -webkit-animation-fill-mode: forwards;
+}
+
+.after-animate {
+  -webkit-animation: minute .5s ease-in infinite;
+}
+.after {
+/* minute hand */
+  width: 50%;
+  background-color: #2085e6;
+}
+@keyframes checkmark {
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes check {
+  50% {
+    -webkit-transform: rotate(230deg) translate( -1px, -6px);
+  }
+  100% {
+    -webkit-transform: rotate(230deg) translate( -1px, -6px);
+    opacity: 1;
+  }
+}
+@keyframes mark {
+  50% {
+    -webkit-transform: rotate(320deg) translate(-5px, 4px) scaleX(1.2);
+  }
+  100% {
+    -webkit-transform: rotate(320deg) translate(-5px, 4px) scaleX(1.2);
+    opacity: 1;
+  }
+}
+@keyframes hour {
+  50% {
+    -webkit-transform: rotate(180deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes minute {
+  50% {
+    -webkit-transform: rotate(180deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+/* for demo purposes only — not required */
+// .preloader {
+//   top: 0;
+//   bottom: 0;
+//   left: 0;
+//   right: 0;
+//   margin: auto;
+// }
+
