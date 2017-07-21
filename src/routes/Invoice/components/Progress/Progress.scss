@@ -2,9 +2,9 @@
 /* end vars */
 .preloader {
   position: absolute;
-  width: 4rem;
-  height: 4rem;
-  border: 0.4rem solid #2085e6;
+  width: 2rem;
+  height: 2rem;
+  border: 0.2rem solid #2085e6;
   border-radius: 100%;
   opacity: 0;
   &.show {
@@ -18,7 +18,7 @@
   top: 50%;
   left: 50%;
   margin: -0.2rem 0 0 -0.2rem;
-  border-bottom: 0.4rem solid #2085e6;
+  border-bottom: 0.2rem solid #2085e6;
   border-radius: 0.6rem;
   -webkit-transform-origin: 0.2rem center;
 }
@@ -38,7 +38,7 @@
   -webkit-animation-fill-mode: forwards;
 }
 .preloader-checkmark {
-  -webkit-animation: checkmark 1s ease-out;
+  -webkit-animation: checkmark 2s ease-out;
   -webkit-animation-fill-mode: forwards;
 }
 

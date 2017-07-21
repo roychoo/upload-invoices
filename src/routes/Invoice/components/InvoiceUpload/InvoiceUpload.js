@@ -4,12 +4,11 @@ import Invoices from '../Invoices'
 import Upload from '../Upload'
 import './InvoiceUpload.scss'
 
-export const InvoiceUpload = ({ onDrop, invoices, uploadStarted, uploadDone }) => (
+export const InvoiceUpload = ({ onDrop, invoices, isUploading }) => (
   <div className='invoice-upload-container'>
     <Upload
       onDrop={onDrop}
-      uploadStarted={uploadStarted}
-      uploadDone={uploadDone}
+      isUploading={isUploading}
     />
     <Invoices invoices={invoices} />
   </div>
@@ -18,8 +17,7 @@ export const InvoiceUpload = ({ onDrop, invoices, uploadStarted, uploadDone }) =
 InvoiceUpload.propTypes = {
   onDrop: PropTypes.func.isRequired,
   invoices: PropTypes.array.isRequired,
-  uploadStarted: PropTypes.bool.isRequired,
-  uploadDone: PropTypes.bool.isRequired
+  isUploading: PropTypes.bool.isRequired
 }
 
 export default InvoiceUpload

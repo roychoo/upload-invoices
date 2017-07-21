@@ -52,7 +52,7 @@ export const dropInvoice = () => {
     return new Promise((resolve) => {
       setTimeout(() => {
         dispatch(dropInvoiceDone())
-      }, 500)
+      }, 5000)
     })
   }
 }
@@ -115,14 +115,12 @@ const ACTION_HANDLERS = {
   },
   [DROP_INVOICE_STARTED]: (state) => ({
     ...state,
-    uploadStarted: true,
-    uploadDone: false
+    isUploading: true
   }),
   [DROP_INVOICE_DONE]: (state, { payload }) => {
     return {
       ...state,
-      uploadDone: true,
-      uploadStarted: false,
+      isUploading: false,
       invoices: { ...state.invoices, [payload.id]: payload }
     }
   }
@@ -133,8 +131,7 @@ const ACTION_HANDLERS = {
 // ------------------------------------
 const initialState = {
   isLoading: false,
-  uploadStarted: false,
-  uploadDone: false,
+  isUploading: false,
   invoices: {}
 }
 // selectors

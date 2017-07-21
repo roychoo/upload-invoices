@@ -11,34 +11,45 @@ export class Progress extends Component {
     this.isHourAnimating = true
     this.state = {
       animating: true,
+      showPreloader: true,
+      showProgress: props.isUploading,
       animateToCheckMark: false
     }
   }
+
   componentWillReceiveProps (nextProps) {
-    console.log(nextProps)
-    if (nextProps.uploadDone) {
+    if (this.props.isUploading && !nextProps.isUploading) {
       this.animating = false
-    } else if (nextProps.uploadStarted) {
-      this.animating = true
+    } else if (nextProps.isUploading) {
+      this.setState({ showProgress: true })
     }
   }
 
   componentDidMount () {
     this.prefixEventHandler(this.before, 'AnimationIteration', this.handleAnimationIteration)
     this.prefixEventHandler(this.after, 'AnimationIteration', this.handleAnimationIteration)
+    this.prefixEventHandler(this.preloader, 'AnimationEnd', this.handleAnimationIteration)
+  }
+
+  componentWillUnmount () {
+    this.prefixEventHandler(this.before, 'AnimationIteration', this.handleAnimationIteration, true)
+    this.prefixEventHandler(this.after, 'AnimationIteration', this.handleAnimationIteration, true)
+    this.prefixEventHandler(this.preloader, 'AnimationEnd', this.handleAnimationIteration, true)
   }
 
   handleAnimationIteration = (e) => {
-    console.log(this.animating, this.isHourAnimating, this.isMinAnimating)
     if (e.animationName === 'minute' && !this.animating) {
       this.isMinAnimating = false
     }
     if (e.animationName === 'hour' && !this.animating) {
       this.isHourAnimating = false
     }
-    if (!this.isHourAnimating && !this.isMinAnimating) {
+    if (!this.state.animateToCheckMark && !this.isHourAnimating && !this.isMinAnimating) {
       this.setState({ animateToCheckMark: true })
       this.setState({ animating: false })
+    }
+    if (e.animationName === 'checkmark') {
+      this.props.uploadedAnimationDone()
     }
   }
 
@@ -56,23 +67,23 @@ export class Progress extends Component {
 
   render () {
     const beforeClass = classNames({
-      'before': true,
+      'before': this.state.showPreloader,
       'before-animate': this.state.animating,
       'before-checkmark': this.state.animateToCheckMark
     })
 
     const afterClass = classNames({
-      'after': true,
+      'after': this.state.showPreloader,
       'after-animate': this.state.animating,
       'after-checkmark': this.state.animateToCheckMark
     })
     const preloaderClass = classNames({
-      'preloader': true,
-      'show': this.props.uploadStarted,
+      'preloader': this.state.showPreloader,
+      'show': this.state.showProgress,
       'preloader-checkmark': this.state.animateToCheckMark
     })
     return (
-      <div className={preloaderClass}>
+      <div className={preloaderClass} ref={(preloader) => { this.preloader = preloader }}>
         <div ref={(before) => { this.before = before }} className={beforeClass} />
         <div ref={(after) => { this.after = after }} className={afterClass} />
       </div>
@@ -81,8 +92,8 @@ export class Progress extends Component {
 }
 
 Progress.propTypes = {
-  uploadStarted: PropTypes.bool,
-  uploadDone: PropTypes.bool
+  isUploading: PropTypes.bool.isRequired,
+  uploadedAnimationDone: PropTypes.func.isRequired
 }
 
 export default Progress

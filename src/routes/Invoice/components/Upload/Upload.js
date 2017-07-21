@@ -9,7 +9,14 @@ export class Upload extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      onHover: false
+      onHover: false,
+      showUploadIcon: true
+    }
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (!this.props.isUploading && nextProps.isUploading) {
+      this.setState({ showUploadIcon: false })
     }
   }
 
@@ -26,6 +33,10 @@ export class Upload extends Component {
     this.props.onDrop()
   }
 
+  uploadedAnimationDone = () => {
+    this.setState({ showUploadIcon: true })
+  }
+
   render () {
     return (
       <div className='upload-container'>
@@ -35,14 +46,15 @@ export class Upload extends Component {
           onDragLeave={this.onDragLeave}
           className='dropzone'
         >
-          <Progress
-            uploadStarted={this.props.uploadStarted}
-            uploadDone={this.props.uploadDone}
-          />
           {
-            !this.props.uploadStarted ? (
+            this.state.showUploadIcon ? (
               <UploadStatusIcon status={this.state.onHover} />
-            ) : ''
+            ) : (
+              <Progress
+                isUploading={this.props.isUploading}
+                uploadedAnimationDone={this.uploadedAnimationDone}
+              />
+            )
           }
         </Dropzone>
       </div>
@@ -52,8 +64,7 @@ export class Upload extends Component {
 
 Upload.propTypes = {
   onDrop: PropTypes.func.isRequired,
-  uploadStarted: PropTypes.bool.isRequired,
-  uploadDone: PropTypes.bool.isRequired
+  isUploading: PropTypes.bool.isRequired
 }
 
 export default Upload
