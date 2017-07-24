@@ -1,17 +1,11 @@
-import HomeRoute from 'routes/Home'
+import InvoiceRoute from 'routes/Invoice'
 
-describe('(Route) Home', () => {
-  let _component
-
-  beforeEach(() => {
-    _component = HomeRoute.component()
-  })
-
+describe.only('(Route) Invoice', () => {
   it('Should return a route configuration object', () => {
-    expect(typeof HomeRoute).to.equal('object')
+    expect(typeof InvoiceRoute({})).to.equal('object')
   })
 
-  it('Should define a route component', () => {
-    expect(_component.type).to.equal('div')
+  it('Should define a undefined route as it is root route', () => {
+    expect(typeof InvoiceRoute({}).path).to.equal('undefined')
   })
 })
